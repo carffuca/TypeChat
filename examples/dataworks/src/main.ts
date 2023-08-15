@@ -9,10 +9,10 @@ dotenv.config({ path: path.join(__dirname, "../../../.env") });
 const model = createLanguageModel(process.env);
 const schema = fs.readFileSync(path.join(__dirname, "dataworksActionsSchema.ts"), "utf8");
 const translator = createJsonTranslator<DataWorksActions>(model, schema, "DataWorksActions");
-//translator.validator.stripNulls = true;
+translator.validator.stripNulls = true;
 
 // Process requests interactively or from the input file specified on the command line
-processRequests("DataWorks 助手 > ", process.argv[2], async (request) => {
+processRequests("DataWorks Copilot > ", process.argv[2], async (request) => {
     const response = await translator.translate(request);
     if (!response.success) {
         console.log(response.message);
